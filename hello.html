@@ -1,268 +1,388 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>The Most Satisfied Hello World</title>
-    <meta name="description" content="A tiny, joyful, accessible Hello World page with animations, confetti, speech, and controls." />
+    <meta name="description"
+        content="A tiny, joyful, accessible Hello World page with animations, confetti, speech, and controls." />
     <style>
-      :root{
-        --bg1:#0f1724; --bg2:#071029; --card:#0b1220; --accent:#ffd166; --muted:#aab3c8;
-      }
-      *{box-sizing:border-box}
-      html,body{height:100%}
-      body{
-        margin:0;font-family:Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
-        background: radial-gradient(1200px 600px at 10% 10%, #07203a 0%, transparent 20%),
-                    radial-gradient(900px 500px at 90% 90%, #1b2b3a 0%, transparent 16%),
-                    linear-gradient(135deg,var(--bg1),var(--bg2));
-        color:#e6eef8; display:flex;align-items:center;justify-content:center;padding:48px;
-      }
+        :root {
+            --bg1: #0f1724;
+            --bg2: #071029;
+            --card: #0b1220;
+            --accent: #ffd166;
+            --muted: #aab3c8;
+        }
 
-      .card{
-        width:100%;max-width:980px;border-radius:18px;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-        box-shadow: 0 8px 30px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
-        display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:center;
-      }
+        * {
+            box-sizing: border-box
+        }
 
-      .left{padding:12px}
-      h1{font-size: clamp(2.4rem, 4vw, 4rem); margin:0 0 8px 0; line-height:1; display:flex;align-items:center;gap:14px}
-      .subtitle{color:var(--muted);margin:0 0 18px 0;font-size:1rem}
+        html,
+        body {
+            height: 100%
+        }
 
-      .smile{
-        display:inline-grid;place-items:center;width:120px;height:120px;border-radius:50%;background:linear-gradient(180deg,#fff 0%, #ffd) ;
-        transform:translateY(2px);box-shadow: 0 12px 30px rgba(1,6,20,0.6);
-      }
+        body {
+            margin: 0;
+            font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, #07203a 0%, transparent 20%),
+                radial-gradient(900px 500px at 90% 90%, #1b2b3a 0%, transparent 16%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            color: #e6eef8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+        }
 
-      .face{font-size:3.6rem;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.45));}
-      .eyes{display:flex;gap:8px}
+        .card {
+            width: 100%;
+            max-width: 980px;
+            border-radius: 18px;
+            padding: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            align-items: center;
+        }
 
-      .punchline{margin-top:8px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); color:var(--muted)}
+        .left {
+            padding: 12px
+        }
 
-      .controls{display:flex;flex-direction:column;gap:12px}
-      .controls .panel{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+        h1 {
+            font-size: clamp(2.4rem, 4vw, 4rem);
+            margin: 0 0 8px 0;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
 
-      label{font-size:0.9rem;color:var(--muted);display:block;margin-bottom:8px}
-      input[type=range]{width:100%}
+        .subtitle {
+            color: var(--muted);
+            margin: 0 0 18px 0;
+            font-size: 1rem
+        }
 
-      .buttons{display:flex;gap:8px;margin-top:6px}
-      button{cursor:pointer;border:0;padding:10px 14px;border-radius:10px;background:#0b1220;color:var(--accent);font-weight:600}
-      button.secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+        .smile {
+            display: inline-grid;
+            place-items: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #fff 0%, #ffd);
+            transform: translateY(2px);
+            box-shadow: 0 12px 30px rgba(1, 6, 20, 0.6);
+        }
 
-      canvas.confetti{position:fixed;left:0;top:0;pointer-events:none;mix-blend-mode:screen}
+        .face {
+            font-size: 3.6rem;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
+        }
 
-      footer{grid-column:1/-1;margin-top:6px;color:var(--muted);font-size:0.85rem}
+        .eyes {
+            display: flex;
+            gap: 8px
+        }
 
-      @media (max-width:880px){
-        .card{grid-template-columns:1fr;}
-        .smile{width:96px;height:96px}
-      }
+        .punchline {
+            margin-top: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            color: var(--muted)
+        }
 
-      @media (prefers-reduced-motion: reduce){
-        .face{transition:none;animation:none}
-      }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .controls .panel {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 10px
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 8px
+        }
+
+        input[type=range] {
+            width: 100%
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px
+        }
+
+        button {
+            cursor: pointer;
+            border: 0;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: #0b1220;
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        button.secondary {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, 0.04)
+        }
+
+        canvas.confetti {
+            position: fixed;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            mix-blend-mode: screen
+        }
+
+        footer {
+            grid-column: 1/-1;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 0.85rem
+        }
+
+        @media (max-width:880px) {
+            .card {
+                grid-template-columns: 1fr;
+            }
+
+            .smile {
+                width: 96px;
+                height: 96px
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .face {
+                transition: none;
+                animation: none
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <canvas class="confetti" aria-hidden="true"></canvas>
     <main class="card" role="main" aria-labelledby="hello-title">
-      <section class="left">
-        <h1 id="hello-title">
-          <span class="smile" aria-hidden="true">
-            <span class="face" id="happy-face">😊</span>
-          </span>
-          Hello, world!
-        </h1>
-        <p class="subtitle" id="mood-text">This is the most satisfied Hello World you'll ever meet — tuned to maximum delight.</p>
+        <section class="left">
+            <h1 id="hello-title">
+                <span class="smile" aria-hidden="true">
+                    <span class="face" id="happy-face">😊</span>
+                </span>
+                Hello, world!
+            </h1>
+            <p class="subtitle" id="mood-text">This is the most satisfied Hello World you'll ever meet — tuned to
+                maximum delight.</p>
 
-        <div class="punchline" aria-live="polite">Say hello to your new digital friend. Try the controls to change the satisfaction level, hear it speak, or trigger celebratory confetti.</div>
+            <div class="punchline" aria-live="polite">Say hello to your new digital friend. Try the controls to change
+                the satisfaction level, hear it speak, or trigger celebratory confetti.</div>
 
-        <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button id="speak" aria-label="Speak Hello">Speak</button>
-          <button id="surprise" class="secondary" aria-label="Surprise me with a confetti burst">Surprise me</button>
-          <button id="snapshot" class="secondary" aria-label="Save a snapshot PNG">Save snapshot</button>
-        </div>
-      </section>
+            <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                <button id="speak" aria-label="Speak Hello">Speak</button>
+                <button id="surprise" class="secondary" aria-label="Surprise me with a confetti burst">Surprise
+                    me</button>
+                <button id="snapshot" class="secondary" aria-label="Save a snapshot PNG">Save snapshot</button>
+            </div>
+        </section>
 
-      <aside class="controls" aria-label="Satisfaction controls">
-        <div class="panel">
-          <label for="satisfaction">Satisfaction: <strong id="satisfaction-value">100%</strong></label>
-          <input id="satisfaction" type="range" min="0" max="100" value="100" />
-        </div>
+        <aside class="controls" aria-label="Satisfaction controls">
+            <div class="panel">
+                <label for="satisfaction">Satisfaction: <strong id="satisfaction-value">100%</strong></label>
+                <input id="satisfaction" type="range" min="0" max="100" value="100" />
+            </div>
 
-        <div class="panel">
-          <label for="voice-select">Voice & pitch</label>
-          <select id="voice-select" aria-label="Voice selection"></select>
-          <label for="pitch">Pitch: <span id="pitch-value">1</span></label>
-          <input id="pitch" type="range" min="0.5" max="2" step="0.1" value="1" />
-        </div>
+            <div class="panel">
+                <label for="voice-select">Voice & pitch</label>
+                <select id="voice-select" aria-label="Voice selection"></select>
+                <label for="pitch">Pitch: <span id="pitch-value">1</span></label>
+                <input id="pitch" type="range" min="0.5" max="2" step="0.1" value="1" />
+            </div>
 
-        <div class="panel">
-          <label>Accessibility</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <button id="reduce-motion" class="secondary">Toggle reduced motion</button>
-            <button id="reset" class="secondary">Reset</button>
-          </div>
-        </div>
+            <div class="panel">
+                <label>Accessibility</label>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <button id="reduce-motion" class="secondary">Toggle reduced motion</button>
+                    <button id="reset" class="secondary">Reset</button>
+                </div>
+            </div>
 
-        <footer>Built with joy • Accessible • Responsive • Works offline (no external assets)</footer>
-      </aside>
+            <footer>Built with joy • Accessible • Responsive • Works offline (no external assets)</footer>
+        </aside>
     </main>
 
     <script>
-      // Quick contract
-      // Inputs: user interactions (range, buttons). Outputs: animations, speech, confetti, snapshot.
+        // Quick contract
+        // Inputs: user interactions (range, buttons). Outputs: animations, speech, confetti, snapshot.
 
-      const confettiCanvas = document.querySelector('canvas.confetti');
-      const ctx = confettiCanvas.getContext('2d');
-      let W = confettiCanvas.width = innerWidth;
-      let H = confettiCanvas.height = innerHeight;
+        const confettiCanvas = document.querySelector('canvas.confetti');
+        const ctx = confettiCanvas.getContext('2d');
+        let W = confettiCanvas.width = innerWidth;
+        let H = confettiCanvas.height = innerHeight;
 
-      const particles = [];
-      function rand(min, max){ return Math.random()*(max-min)+min }
+        const particles = [];
+        function rand(min, max) { return Math.random() * (max - min) + min }
 
-      function createBurst(x, y, count=120){
-        for(let i=0;i<count;i++){
-          particles.push({
-            x, y,
-            vx: rand(-12,12), vy: rand(-18, -4),
-            size: Math.round(rand(6,14)),
-            color: ['#ffd166','#06d6a0','#118ab2','#ef476f','#06b6d4'][Math.floor(rand(0,5))],
-            rotation: rand(0,360), angVel: rand(-0.2,0.2), life: rand(60,140)
-          })
+        function createBurst(x, y, count = 120) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x, y,
+                    vx: rand(-12, 12), vy: rand(-18, -4),
+                    size: Math.round(rand(6, 14)),
+                    color: ['#ffd166', '#06d6a0', '#118ab2', '#ef476f', '#06b6d4'][Math.floor(rand(0, 5))],
+                    rotation: rand(0, 360), angVel: rand(-0.2, 0.2), life: rand(60, 140)
+                })
+            }
         }
-      }
 
-      function render(){
-        ctx.clearRect(0,0,W,H);
-        for(let i=particles.length-1;i>=0;i--){
-          const p = particles[i];
-          p.vy += 0.5; p.x += p.vx; p.y += p.vy; p.rotation += p.angVel; p.life--;
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rotation);
-          ctx.fillStyle = p.color;
-          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
-          ctx.restore();
-          if(p.y > H+50 || p.x < -50 || p.x > W+50 || p.life<=0) particles.splice(i,1);
+        function render() {
+            ctx.clearRect(0, 0, W, H);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.vy += 0.5; p.x += p.vx; p.y += p.vy; p.rotation += p.angVel; p.life--;
+                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                ctx.restore();
+                if (p.y > H + 50 || p.x < -50 || p.x > W + 50 || p.life <= 0) particles.splice(i, 1);
+            }
+            requestAnimationFrame(render);
         }
-        requestAnimationFrame(render);
-      }
-      render();
+        render();
 
-      addEventListener('resize', ()=>{ W=confettiCanvas.width=innerWidth; H=confettiCanvas.height=innerHeight });
+        addEventListener('resize', () => { W = confettiCanvas.width = innerWidth; H = confettiCanvas.height = innerHeight });
 
-      // Face animation / satisfaction binding
-      const satisfaction = document.getElementById('satisfaction');
-      const satisfactionValue = document.getElementById('satisfaction-value');
-      const happyFace = document.getElementById('happy-face');
-      const moodText = document.getElementById('mood-text');
+        // Face animation / satisfaction binding
+        const satisfaction = document.getElementById('satisfaction');
+        const satisfactionValue = document.getElementById('satisfaction-value');
+        const happyFace = document.getElementById('happy-face');
+        const moodText = document.getElementById('mood-text');
 
-      function updateFace(v){
-        satisfactionValue.textContent = Math.round(v) + '%';
-        // choose emoji depending on level
-        if(v >= 90){ happyFace.textContent = '😁'; moodText.textContent = 'Overflowing with delight!'; }
-        else if(v >= 70){ happyFace.textContent = '😊'; moodText.textContent = 'Pleasantly satisfied.' }
-        else if(v >= 40){ happyFace.textContent = '🙂'; moodText.textContent = 'Calm and content.' }
-        else if(v >= 10){ happyFace.textContent = '😐'; moodText.textContent = 'Neutral — room for improvement.' }
-        else { happyFace.textContent = '😫'; moodText.textContent = 'Tired and under-caffeinated.' }
-        // face scale animation
-        const scale = 0.9 + 0.0015*v;
-        happyFace.style.transform = `scale(${scale})`;
-      }
-      updateFace(satisfaction.value);
-      satisfaction.addEventListener('input', (e)=>{
-        updateFace(e.target.value);
-      });
+        function updateFace(v) {
+            satisfactionValue.textContent = Math.round(v) + '%';
+            // choose emoji depending on level
+            if (v >= 90) { happyFace.textContent = '😁'; moodText.textContent = 'Overflowing with delight!'; }
+            else if (v >= 70) { happyFace.textContent = '😊'; moodText.textContent = 'Pleasantly satisfied.' }
+            else if (v >= 40) { happyFace.textContent = '🙂'; moodText.textContent = 'Calm and content.' }
+            else if (v >= 10) { happyFace.textContent = '😐'; moodText.textContent = 'Neutral — room for improvement.' }
+            else { happyFace.textContent = '😫'; moodText.textContent = 'Tired and under-caffeinated.' }
+            // face scale animation
+            const scale = 0.9 + 0.0015 * v;
+            happyFace.style.transform = `scale(${scale})`;
+        }
+        updateFace(satisfaction.value);
+        satisfaction.addEventListener('input', (e) => {
+            updateFace(e.target.value);
+        });
 
-      // Confetti triggers
-      document.getElementById('surprise').addEventListener('click', ()=>{
-        createBurst(innerWidth/2, innerHeight/4, 160);
-      });
+        // Confetti triggers
+        document.getElementById('surprise').addEventListener('click', () => {
+            createBurst(innerWidth / 2, innerHeight / 4, 160);
+        });
 
-      // On high satisfaction, auto-burst subtle confetti
-      let lastAuto = 0;
-      satisfaction.addEventListener('change', (e)=>{
-        const v = Number(e.target.value);
-        if(v >= 95 && Date.now() - lastAuto > 2000){ createBurst(innerWidth*0.65, innerHeight*0.35, 220); lastAuto = Date.now(); }
-      });
+        // On high satisfaction, auto-burst subtle confetti
+        let lastAuto = 0;
+        satisfaction.addEventListener('change', (e) => {
+            const v = Number(e.target.value);
+            if (v >= 95 && Date.now() - lastAuto > 2000) { createBurst(innerWidth * 0.65, innerHeight * 0.35, 220); lastAuto = Date.now(); }
+        });
 
-      // Speak
-      const speakBtn = document.getElementById('speak');
-      const pitchControl = document.getElementById('pitch');
-      const pitchValue = document.getElementById('pitch-value');
-      const voiceSelect = document.getElementById('voice-select');
+        // Speak
+        const speakBtn = document.getElementById('speak');
+        const pitchControl = document.getElementById('pitch');
+        const pitchValue = document.getElementById('pitch-value');
+        const voiceSelect = document.getElementById('voice-select');
 
-      function populateVoices(){
-        const voices = speechSynthesis.getVoices();
-        voiceSelect.innerHTML = '';
-        voices.forEach(v=>{ const opt = document.createElement('option'); opt.value = v.name; opt.textContent = `${v.name} ${v.lang}`; voiceSelect.appendChild(opt)});
-        if(!voices.length){ const opt = document.createElement('option'); opt.textContent = 'Default'; voiceSelect.appendChild(opt)}
-      }
-      populateVoices();
-      speechSynthesis.onvoiceschanged = populateVoices;
+        function populateVoices() {
+            const voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            voices.forEach(v => { const opt = document.createElement('option'); opt.value = v.name; opt.textContent = `${v.name} ${v.lang}`; voiceSelect.appendChild(opt) });
+            if (!voices.length) { const opt = document.createElement('option'); opt.textContent = 'Default'; voiceSelect.appendChild(opt) }
+        }
+        populateVoices();
+        speechSynthesis.onvoiceschanged = populateVoices;
 
-      pitchControl.addEventListener('input', ()=>{ pitchValue.textContent = pitchControl.value });
+        pitchControl.addEventListener('input', () => { pitchValue.textContent = pitchControl.value });
 
-      speakBtn.addEventListener('click', ()=>{
-        const text = `Hello, world! I am ${satisfaction.value} percent satisfied.`;
-        const u = new SpeechSynthesisUtterance(text);
-        const vname = voiceSelect.value;
-        const voices = speechSynthesis.getVoices();
-        if(vname){ const chosen = voices.find(x=>x.name===vname); if(chosen) u.voice = chosen }
-        u.pitch = Number(pitchControl.value);
-        u.rate = 1 + (satisfaction.value-75)/300; // more satisfied -> slightly quicker
-        u.volume = 1;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
-        // small confetti when speaking at high satisfaction
-        if(Number(satisfaction.value) > 80) createBurst(innerWidth*0.5, innerHeight*0.25, 80);
-      });
+        speakBtn.addEventListener('click', () => {
+            const text = `Hello, world! I am ${satisfaction.value} percent satisfied.`;
+            const u = new SpeechSynthesisUtterance(text);
+            const vname = voiceSelect.value;
+            const voices = speechSynthesis.getVoices();
+            if (vname) { const chosen = voices.find(x => x.name === vname); if (chosen) u.voice = chosen }
+            u.pitch = Number(pitchControl.value);
+            u.rate = 1 + (satisfaction.value - 75) / 300; // more satisfied -> slightly quicker
+            u.volume = 1;
+            speechSynthesis.cancel();
+            speechSynthesis.speak(u);
+            // small confetti when speaking at high satisfaction
+            if (Number(satisfaction.value) > 80) createBurst(innerWidth * 0.5, innerHeight * 0.25, 80);
+        });
 
-      // Snapshot (PNG)
-      document.getElementById('snapshot').addEventListener('click', async ()=>{
-        try{
-          const dataUrl = await htmlToPng();
-          const a = document.createElement('a'); a.href = dataUrl; a.download = 'satisfied-hello.png'; a.click();
-        }catch(err){ alert('Snapshot failed: '+err.message) }
-      });
+        // Snapshot (PNG)
+        document.getElementById('snapshot').addEventListener('click', async () => {
+            try {
+                const dataUrl = await htmlToPng();
+                const a = document.createElement('a'); a.href = dataUrl; a.download = 'satisfied-hello.png'; a.click();
+            } catch (err) { alert('Snapshot failed: ' + err.message) }
+        });
 
-      // Minimal html-to-png using canvas drawImage of window (limited); we render a simplified snapshot: draw background and text.
-      async function htmlToPng(){
-        const cnv = document.createElement('canvas'); cnv.width = Math.min(1200, innerWidth); cnv.height = Math.min(800, innerHeight);
-        const c = cnv.getContext('2d');
-        // background
-        const g = c.createLinearGradient(0,0,cnv.width,cnv.height); g.addColorStop(0,'#07203a'); g.addColorStop(1,'#1b2b3a'); c.fillStyle=g; c.fillRect(0,0,cnv.width,cnv.height);
-        // big text
-        c.fillStyle = '#fff'; c.font = '48px sans-serif'; c.fillText('Hello, world!', 40, 120);
-        c.font = '28px sans-serif'; c.fillStyle = '#ffd166'; c.fillText(`Satisfied: ${satisfaction.value}%`, 40, 170);
-        return cnv.toDataURL('image/png');
-      }
+        // Minimal html-to-png using canvas drawImage of window (limited); we render a simplified snapshot: draw background and text.
+        async function htmlToPng() {
+            const cnv = document.createElement('canvas'); cnv.width = Math.min(1200, innerWidth); cnv.height = Math.min(800, innerHeight);
+            const c = cnv.getContext('2d');
+            // background
+            const g = c.createLinearGradient(0, 0, cnv.width, cnv.height); g.addColorStop(0, '#07203a'); g.addColorStop(1, '#1b2b3a'); c.fillStyle = g; c.fillRect(0, 0, cnv.width, cnv.height);
+            // big text
+            c.fillStyle = '#fff'; c.font = '48px sans-serif'; c.fillText('Hello, world!', 40, 120);
+            c.font = '28px sans-serif'; c.fillStyle = '#ffd166'; c.fillText(`Satisfied: ${satisfaction.value}%`, 40, 170);
+            return cnv.toDataURL('image/png');
+        }
 
-      // Reduced motion toggle: adds/removes a class that is read by CSS/JS
-      const reduceBtn = document.getElementById('reduce-motion');
-      let reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function applyReduced(){
-        if(reduced){ document.documentElement.style.setProperty('--reduced','1'); confettiCanvas.style.display='none' }
-        else { document.documentElement.style.removeProperty('--reduced'); confettiCanvas.style.display='block' }
-      }
-      applyReduced();
-      reduceBtn.addEventListener('click', ()=>{ reduced = !reduced; applyReduced(); reduceBtn.textContent = reduced ? 'Reduced motion ON' : 'Reduced motion OFF' });
+        // Reduced motion toggle: adds/removes a class that is read by CSS/JS
+        const reduceBtn = document.getElementById('reduce-motion');
+        let reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function applyReduced() {
+            if (reduced) { document.documentElement.style.setProperty('--reduced', '1'); confettiCanvas.style.display = 'none' }
+            else { document.documentElement.style.removeProperty('--reduced'); confettiCanvas.style.display = 'block' }
+        }
+        applyReduced();
+        reduceBtn.addEventListener('click', () => { reduced = !reduced; applyReduced(); reduceBtn.textContent = reduced ? 'Reduced motion ON' : 'Reduced motion OFF' });
 
-      // Reset
-      document.getElementById('reset').addEventListener('click', ()=>{
-        satisfaction.value = 100; pitchControl.value = 1; pitchValue.textContent = '1'; updateFace(100);
-      });
+        // Reset
+        document.getElementById('reset').addEventListener('click', () => {
+            satisfaction.value = 100; pitchControl.value = 1; pitchValue.textContent = '1'; updateFace(100);
+        });
 
-      // Auto celebrate on load
-      window.addEventListener('load', ()=>{ createBurst(innerWidth/2, innerHeight/4, 220); });
+        // Auto celebrate on load
+        window.addEventListener('load', () => { createBurst(innerWidth / 2, innerHeight / 4, 220); });
 
-      // Make sure keyboard users can trigger surprise via Enter when focused
-      document.getElementById('surprise').addEventListener('keyup', (e)=>{ if(e.key==='Enter') createBurst(innerWidth/2, innerHeight/4, 220) });
+        // Make sure keyboard users can trigger surprise via Enter when focused
+        document.getElementById('surprise').addEventListener('keyup', (e) => { if (e.key === 'Enter') createBurst(innerWidth / 2, innerHeight / 4, 220) });
 
-      // tiny accessibility: focus outline visible on keyboard navigation
-      document.body.addEventListener('keydown', (e)=>{ if(e.key==='Tab') document.body.classList.add('show-focus') });
+        // tiny accessibility: focus outline visible on keyboard navigation
+        document.body.addEventListener('keydown', (e) => { if (e.key === 'Tab') document.body.classList.add('show-focus') });
 
-      // keep the animation loop simple: occasionally spawn gentle floating confetti when fully satisfied
-      setInterval(()=>{ if(Number(satisfaction.value) > 95 && !reduced) createBurst(rand(100, W-100), rand(100, H/2), 36) }, 3000);
+        // keep the animation loop simple: occasionally spawn gentle floating confetti when fully satisfied
+        setInterval(() => { if (Number(satisfaction.value) > 95 && !reduced) createBurst(rand(100, W - 100), rand(100, H / 2), 36) }, 3000);
     </script>
-  </body>
+</body>
+
 </html>
